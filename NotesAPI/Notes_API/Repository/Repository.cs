@@ -30,9 +30,18 @@ namespace Notes_API.Repository
             return query.ToListAsync();
         }
 
-        public Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = set;
+            if (!tracked)
+            {
+                query = query.AsNoTracking();
+            }
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task RemoveAsync(T entity)
