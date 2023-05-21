@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Notes_API.Data;
+using Notes_API.Repository;
+using Notes_API.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddScoped<INoteRepository,NoteRepository>();
 
 var app = builder.Build();
 
