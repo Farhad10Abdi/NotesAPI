@@ -86,3 +86,5 @@ C:\Users\Lenovo\Desktop\NotesAPI\NotesAPI\Notes_API\obj\Debug\net7.0\refint\Note
 C:\Users\Lenovo\Desktop\NotesAPI\NotesAPI\Notes_API\obj\Debug\net7.0\Notes_API.pdb
 C:\Users\Lenovo\Desktop\NotesAPI\NotesAPI\Notes_API\obj\Debug\net7.0\Notes_API.genruntimeconfig.cache
 C:\Users\Lenovo\Desktop\NotesAPI\NotesAPI\Notes_API\obj\Debug\net7.0\ref\Notes_API.dll
+C:\Users\Lenovo\Desktop\NotesAPI\NotesAPI\Notes_API\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Lenovo\Desktop\NotesAPI\NotesAPI\Notes_API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

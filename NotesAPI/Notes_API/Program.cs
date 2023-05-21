@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Notes_API;
 using Notes_API.Data;
 using Notes_API.Repository;
 using Notes_API.Repository.IRepository;
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 );
 
 builder.Services.AddScoped<INoteRepository,NoteRepository>();
+
+builder.Services.AddAutoMapper(typeof(MappingConfig));
+
 
 var app = builder.Build();
 
