@@ -35,7 +35,7 @@ namespace Notes_API.Controllers
                 List<Notes> notesList = await _noteRepository.GetAllAsync();
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.result = _mapper.Map<NoteDTO>(notesList);
+                _response.result = _mapper.Map<List<NoteDTO>>(notesList);
             }
             catch(Exception ex)
             {
