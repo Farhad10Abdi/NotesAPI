@@ -20,9 +20,14 @@ namespace Notes_API.Repository
             await SaveChangesAsync();
         }
 
-        public Task<T> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+        public Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
         {
-            throw new NotImplementedException();
+            IQueryable<T> query = set;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return query.ToListAsync();
         }
 
         public Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
@@ -30,14 +35,15 @@ namespace Notes_API.Repository
             throw new NotImplementedException();
         }
 
-        public Task RemoveAsync(T entity)
+        public async Task RemoveAsync(T entity)
         {
-            set.Remove()
+            set.Remove(entity);
+            await SaveChangesAsync();
         }
 
-        public Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            await _db.SaveChangesAsync();
         }
     }
 }
