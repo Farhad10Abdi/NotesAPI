@@ -4,6 +4,6 @@ namespace Notes_API.Repository.IRepository
 {
     public interface INoteRepository : IRepository<Notes>
     {
-        Task UpdateAsync(Notes notes);
+        Task<Notes> UpdateAsync(Notes notes);
     }
 }
