@@ -86,7 +86,7 @@ namespace Notes_API.Controllers
                 if(createDTO == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
-                    _response.IsSuccess =false;
+                    _response.IsSuccess = false;
                 }
                 Notes note = _mapper.Map<Notes>(createDTO);
                 await _noteRepository.CreateAsync(note);
