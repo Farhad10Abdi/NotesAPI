@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Notes_API.Models;
 using Notes_API.Models.Dto;
 using Notes_API.Repository.IRepository;
@@ -71,6 +72,34 @@ namespace Notes_API.Controllers
                 _response.IsSuccess = false;
                 _response.ErrorMessages.Add(ex.Message);
                 _response.StatusCode = HttpStatusCode.BadRequest;
+            }
+            return _response;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<APIResponse>> CreateNote([FromBody]NoteCreateDTO createDTO) 
+        {
+            try
+            {
+                if(createDTO == null)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess =false;
+                }
+                Notes note = _mapper.Map<Notes>(createDTO);
+                await _noteRepository.CreateAsync(note);
+                await _noteRepository.SaveChangesAsync();
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.result = _mapper.Map<NoteDTO>(note);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode= HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add(ex.Message);
             }
             return _response;
         }
