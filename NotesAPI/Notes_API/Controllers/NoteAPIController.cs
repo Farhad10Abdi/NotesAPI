@@ -77,7 +77,7 @@ namespace Notes_API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<APIResponse>> CreateNote([FromBody]NoteCreateDTO createDTO) 
         {
@@ -90,9 +90,9 @@ namespace Notes_API.Controllers
                 }
                 Notes note = _mapper.Map<Notes>(createDTO);
                 await _noteRepository.CreateAsync(note);
-                await _noteRepository.SaveChangesAsync();
+                
                 _response.IsSuccess = true;
-                _response.StatusCode = HttpStatusCode.OK;
+                _response.StatusCode = HttpStatusCode.Created;
                 _response.result = _mapper.Map<NoteDTO>(note);
             }
             catch (Exception ex)
@@ -103,5 +103,33 @@ namespace Notes_API.Controllers
             }
             return _response;
         }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> DeleteNote(int id)
+        {
+            try
+            {
+                Notes note = await _noteRepository.GetAsync(u => u.ID == id);
+                if (note == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
+                }
+                await _noteRepository.RemoveAsync(note);
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+            }
+            catch(Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add(ex.Message);
+            }
+            return _response;
+        }
+
     }
 }
