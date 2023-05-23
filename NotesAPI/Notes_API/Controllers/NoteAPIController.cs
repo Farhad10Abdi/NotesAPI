@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using Notes_API.Models;
@@ -12,7 +13,7 @@ namespace Notes_API.Controllers
 {
     [Route("api/NoteAPI")]
     [ApiController]
-    public class NoteAPIController : Controller
+    public class NoteAPIController : ControllerBase
     {
         private readonly INoteRepository _noteRepository;
         private readonly IMapper _mapper;
@@ -160,6 +161,60 @@ namespace Notes_API.Controllers
                 _response.ErrorMessages.Add(ex.Message);
             }
             return _response;
+        }
+
+        [HttpPatch]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> UpdatePartialNote (int id, JsonPatchDocument<NoteUpdateDTO> patchDTO)
+        {
+            try
+            {
+                if (patchDTO == null || id == 0)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Please provide valid informations !");
+                    return BadRequest(_response);
+                }
+                var note = await _noteRepository.GetAsync(u => u.ID == id, tracked: false);
+
+                if (note == null)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("The item you looking for is not found !");
+                    return BadRequest(_response);
+                }
+
+                NoteUpdateDTO NoteDTO = _mapper.Map<NoteUpdateDTO>(note);
+
+                patchDTO.ApplyTo(NoteDTO, ModelState);
+
+                Notes model = _mapper.Map<Notes>(NoteDTO);
+
+                if (!ModelState.IsValid)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
+                    return BadRequest(ModelState);
+                }
+
+                await _noteRepository.UpdateAsync(model);
+
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.result = model;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add(ex.Message);
+            }
+            return Ok(_response);
         }
     }
 }
