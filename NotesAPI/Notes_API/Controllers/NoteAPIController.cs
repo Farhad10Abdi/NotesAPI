@@ -131,5 +131,35 @@ namespace Notes_API.Controllers
             return _response;
         }
 
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> UpdateNote([FromBody] NoteUpdateDTO updateDTO)
+        {
+            try
+            {
+                Notes note = await _noteRepository.GetAsync(u => u.ID == updateDTO.ID, tracked:false);
+                if (note == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.IsSuccess = false;
+                }
+                note = _mapper.Map<Notes>(updateDTO);
+                await _noteRepository.UpdateAsync(note);
+
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.result = _mapper.Map<NoteDTO>(note);
+
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add(ex.Message);
+            }
+            return _response;
+        }
     }
 }
