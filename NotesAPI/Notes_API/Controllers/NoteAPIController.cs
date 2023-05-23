@@ -35,17 +35,19 @@ namespace Notes_API.Controllers
             try
             {
                 List<Notes> notesList = await _noteRepository.GetAllAsync();
+
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.result = _mapper.Map<List<NoteDTO>>(notesList);
+                return Ok(_response);
             }
             catch(Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
             }
-            return _response;
         }
 
 
@@ -62,19 +64,20 @@ namespace Notes_API.Controllers
                 {
                     _response.IsSuccess = false;
                     _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.ErrorMessages.Add("Didn't find the resource !");
                 }
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.result = _mapper.Map<NoteDTO>(note);
-
+                return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.ErrorMessages.Add(ex.Message);
                 _response.StatusCode = HttpStatusCode.BadRequest;
+                return BadRequest(_response);
             }
-            return _response;
         }
 
         [HttpPost]
@@ -88,6 +91,8 @@ namespace Notes_API.Controllers
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Please provide valid information !");
+                    return BadRequest(_response);
                 }
                 Notes note = _mapper.Map<Notes>(createDTO);
                 await _noteRepository.CreateAsync(note);
@@ -95,14 +100,16 @@ namespace Notes_API.Controllers
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.result = _mapper.Map<NoteDTO>(note);
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode= HttpStatusCode.BadRequest;
                 _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
             }
-            return _response;
         }
 
         [HttpDelete("{id:int}")]
@@ -118,18 +125,21 @@ namespace Notes_API.Controllers
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Didn't find the resource !");
+                    return BadRequest(_response);
                 }
                 await _noteRepository.RemoveAsync(note);
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
             }
             catch(Exception ex)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
             }
-            return _response;
         }
 
         [HttpPut]
@@ -145,6 +155,8 @@ namespace Notes_API.Controllers
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     _response.IsSuccess = false;
+                    _response.ErrorMessages.Add("Didn't find the resource !");
+                    return BadRequest(_response);
                 }
                 note = _mapper.Map<Notes>(updateDTO);
                 await _noteRepository.UpdateAsync(note);
@@ -153,14 +165,15 @@ namespace Notes_API.Controllers
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.result = _mapper.Map<NoteDTO>(note);
 
+                return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
                 _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
             }
-            return _response;
         }
 
         [HttpPatch]
