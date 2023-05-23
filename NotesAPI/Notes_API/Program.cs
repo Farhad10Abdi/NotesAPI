@@ -21,6 +21,8 @@ builder.Services.AddScoped<INoteRepository,NoteRepository>();
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
+builder.Services.AddControllers().AddNewtonsoftJson();
+
 
 var app = builder.Build();
 
