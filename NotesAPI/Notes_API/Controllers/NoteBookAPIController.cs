@@ -85,5 +85,38 @@ namespace Notes_API.Controllers
                 return BadRequest(_response);
             }
         }
+
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<APIResponse>> CreateNoteBook([FromBody] NoteBookCreateDTO createDTO)
+        {
+            try
+            {
+                if (createDTO == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ErrorMessages.Add("Please provide valid informations !");
+                    return BadRequest(_response);
+                }
+                NoteBook noteBook = _mapper.Map<NoteBook>(createDTO);
+                
+                await _noteBookRepository.CreateAsync(noteBook);
+
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.result = _mapper.Map<NoteBookDTO>(noteBook);
+                return Ok(_response);
+             }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }
