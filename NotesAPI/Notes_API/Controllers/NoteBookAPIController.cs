@@ -118,5 +118,39 @@ namespace Notes_API.Controllers
                 return BadRequest(_response);
             }
         }
+
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> DeleteNoteBook(int id)
+        {
+            try
+            {
+                NoteBook noteBook = await _noteBookRepository.GetAsync(u => u.Id == id);
+                if (noteBook == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.ErrorMessages.Add("Nothing found to delete !");
+                    return NotFound(_response);
+                }
+
+                await _noteBookRepository.RemoveAsync(noteBook);
+
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
     }
 }
