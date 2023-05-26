@@ -5,6 +5,10 @@ namespace Notes_API.Models.Dto
     public class NoteUpdateDTO
     {
         [Required]
+        public int NoteBookId { get; set; }
+
+
+        [Required]
         public int ID { get; set; }
         public string Text { get; set; }
         [Required]
