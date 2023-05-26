@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Azure;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Notes_API.Models;
@@ -186,6 +188,53 @@ namespace Notes_API.Controllers
 
                 return Ok(_response);
 
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+
+        [HttpPatch("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> UpdatePartialNoteBook (int id , JsonPatchDocument<NoteBookUpdateDTO> patchDTO)
+        {
+            try
+            {
+                if (id == 0 || patchDTO == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.ErrorMessages.Add("Please provide valid information !");
+                    return BadRequest(_response);
+                }
+                NoteBook noteBook = await _noteBookRepository.GetAsync(u => u.Id == id , tracked:false);
+                if (noteBook == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.ErrorMessages.Add("Nothing found to update !");
+                    return NotFound(_response);
+                }
+                NoteBookUpdateDTO updateDTO = _mapper.Map<NoteBookUpdateDTO>(noteBook);
+
+                patchDTO.ApplyTo(updateDTO, ModelState);
+
+                NoteBook model = _mapper.Map<NoteBook>(updateDTO);
+
+                await _noteBookRepository.UpdateAsync(model);
+
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.result = _mapper.Map<NoteBookDTO>(model);
+
+                return Ok(_response);
             }
             catch (Exception ex)
             {
