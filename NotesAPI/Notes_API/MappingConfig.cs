@@ -15,6 +15,16 @@ namespace Notes_API
 
             CreateMap<NoteDTO, NoteCreateDTO>().ReverseMap();
             CreateMap<NoteDTO, NoteCreateDTO>().ReverseMap();
+
+
+
+            CreateMap<NoteBook, NoteBookDTO>().ReverseMap();
+
+            CreateMap<NoteBook, NoteBookCreateDTO>().ReverseMap();
+            CreateMap<NoteBook, NoteBookUpdateDTO>().ReverseMap();
+
+            CreateMap<NoteBookDTO, NoteBookCreateDTO>().ReverseMap();
+            CreateMap<NoteBookDTO, NoteBookUpdateDTO>().ReverseMap();
         }
     }
 }
