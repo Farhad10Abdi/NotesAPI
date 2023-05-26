@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Identity.Client;
+using System.ComponentModel.DataAnnotations;
 
 namespace Notes_API.Models
 {
@@ -12,5 +13,8 @@ namespace Notes_API.Models
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+
+        public int NoteBookId { get; set; }
+        public NoteBook NoteBook { get; set; } = null!;
     }
 }
