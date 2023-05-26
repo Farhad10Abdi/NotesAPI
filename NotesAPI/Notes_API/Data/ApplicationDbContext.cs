@@ -16,6 +16,7 @@ namespace Notes_API.Data
         }
         
         public DbSet<Notes> Notes { get; set; }
+        public DbSet<NoteBook> NoteBooks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
