@@ -26,6 +26,7 @@ namespace Notes_API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<APIResponse>> GetAllNoteBooks()
         {
             try
@@ -42,6 +43,38 @@ namespace Notes_API.Controllers
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.result = _mapper.Map<List<NoteBookDTO>>(noteBooks);
                 
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add(ex.Message);
+                return BadRequest(_response);
+            }
+        }
+
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponse>> GetNoteBook(int id)
+        {
+            try
+            {
+                NoteBook noteBook = await _noteBookRepository.GetAsync(u => u.Id == id);
+                if (noteBook == null)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.ErrorMessages.Add("Nothing found !");
+                    return NotFound(_response);
+                }
+                _response.IsSuccess = true;
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.result = _mapper.Map<NoteBookDTO>(noteBook);
+
                 return Ok(_response);
             }
             catch (Exception ex)
