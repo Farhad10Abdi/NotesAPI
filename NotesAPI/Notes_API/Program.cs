@@ -39,6 +39,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFramework
 
 builder.Services.AddScoped<INoteRepository,NoteRepository>();
 builder.Services.AddScoped<INoteBookRepository, NoteBookRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddResponseCaching();
 
