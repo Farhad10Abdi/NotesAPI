@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Notes_API.Models;
 using Notes_API.Models.Dto;
 using Notes_API.Repository.IRepository;
+using System.Data;
 using System.Net;
 using System.Text.Json;
 
@@ -99,6 +101,9 @@ namespace Notes_API.Controllers.v1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> CreateNoteBook([FromBody] NoteBookCreateDTO createDTO)
         {
             try
@@ -133,6 +138,9 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> DeleteNoteBook(int id)
         {
             try
@@ -167,6 +175,9 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> UpdateNoteBook(int id, [FromBody] NoteBookUpdateDTO updateDTO)
         {
             try
@@ -210,6 +221,9 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> UpdatePartialNoteBook(int id, JsonPatchDocument<NoteBookUpdateDTO> patchDTO)
         {
             try

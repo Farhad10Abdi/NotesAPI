@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -7,6 +8,7 @@ using Notes_API.Models.Dto;
 using Notes_API.Repository.IRepository;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Net;
 using System.Text.Json;
 
@@ -62,6 +64,8 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<APIResponse>> GetNote(int id)
         {
             try
@@ -90,6 +94,9 @@ namespace Notes_API.Controllers.v1
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> CreateNote([FromBody] NoteCreateDTO createDTO)
         {
             try
@@ -123,6 +130,9 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> DeleteNote(int id)
         {
             try
@@ -153,6 +163,9 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> UpdateNote([FromBody] NoteUpdateDTO updateDTO)
         {
             try
@@ -187,6 +200,9 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [Authorize(Roles = "admin")]
         public async Task<ActionResult<APIResponse>> UpdatePartialNote(int id, JsonPatchDocument<NoteUpdateDTO> patchDTO)
         {
             try

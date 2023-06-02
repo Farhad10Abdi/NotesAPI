@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hz6cEo8vUrpJVPXRtayqVgH+M1XXqbDxu7pWo+wpOGEZD+3jeYSPbLqoB7QtwqOHvPiNxxaeuVLzY/i3rhNONg==",
+  "dgSpecHash": "ficC/XihtGbWakSL02CPvUs3WNTuqcEv9XxDr1NSOp0Q+nhrlyn14r8JeI/jC9XNM7wDrkn2gDnmB0VoYthL8g==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\NotesAPI\\NotesAPI\\Notes_API\\Notes_API.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.5\\microsoft.aspnetcore.authentication.jwtbearer.7.0.5.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.5\\microsoft.aspnetcore.cryptography.internal.7.0.5.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.5\\microsoft.aspnetcore.cryptography.keyderivation.7.0.5.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\7.0.5\\microsoft.aspnetcore.identity.entityframeworkcore.7.0.5.nupkg.sha512",
