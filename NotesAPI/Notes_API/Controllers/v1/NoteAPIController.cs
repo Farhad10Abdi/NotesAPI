@@ -9,7 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 
-namespace Notes_API.Controllers
+namespace Notes_API.Controllers.v1
 {
     [Route("api/v{version:apiversion}/NoteAPI")]
     [ApiController]
@@ -19,7 +19,7 @@ namespace Notes_API.Controllers
         private readonly IMapper _mapper;
         private APIResponse _response;
 
-        public NoteAPIController(INoteRepository noteRepository,IMapper mapper)
+        public NoteAPIController(INoteRepository noteRepository, IMapper mapper)
         {
             _noteRepository = noteRepository;
             _mapper = mapper;
@@ -41,7 +41,7 @@ namespace Notes_API.Controllers
                 _response.result = _mapper.Map<List<NoteDTO>>(notesList);
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -60,7 +60,7 @@ namespace Notes_API.Controllers
             try
             {
                 var note = await _noteRepository.GetAsync(u => u.ID == id);
-                if(note == null)
+                if (note == null)
                 {
                     _response.IsSuccess = false;
                     _response.StatusCode = HttpStatusCode.NotFound;
@@ -83,11 +83,11 @@ namespace Notes_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> CreateNote([FromBody]NoteCreateDTO createDTO) 
+        public async Task<ActionResult<APIResponse>> CreateNote([FromBody] NoteCreateDTO createDTO)
         {
             try
             {
-                if(createDTO == null)
+                if (createDTO == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     _response.IsSuccess = false;
@@ -96,7 +96,7 @@ namespace Notes_API.Controllers
                 }
                 Notes note = _mapper.Map<Notes>(createDTO);
                 await _noteRepository.CreateAsync(note);
-                
+
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.result = _mapper.Map<NoteDTO>(note);
@@ -106,7 +106,7 @@ namespace Notes_API.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.StatusCode= HttpStatusCode.BadRequest;
+                _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.ErrorMessages.Add(ex.Message);
                 return BadRequest(_response);
             }
@@ -133,7 +133,7 @@ namespace Notes_API.Controllers
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccess = false;
@@ -150,7 +150,7 @@ namespace Notes_API.Controllers
         {
             try
             {
-                Notes note = await _noteRepository.GetAsync(u => u.ID == updateDTO.ID, tracked:false);
+                Notes note = await _noteRepository.GetAsync(u => u.ID == updateDTO.ID, tracked: false);
                 if (note == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
@@ -180,7 +180,7 @@ namespace Notes_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> UpdatePartialNote (int id, JsonPatchDocument<NoteUpdateDTO> patchDTO)
+        public async Task<ActionResult<APIResponse>> UpdatePartialNote(int id, JsonPatchDocument<NoteUpdateDTO> patchDTO)
         {
             try
             {
