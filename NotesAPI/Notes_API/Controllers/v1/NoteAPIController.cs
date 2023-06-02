@@ -31,11 +31,11 @@ namespace Notes_API.Controllers.v1
         [ResponseCache(Duration =30)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<APIResponse>> GetAllNotes()
+        public async Task<ActionResult<APIResponse>> GetAllNotes(int pageSize = 2 , int pageNumber = 1)
         {
             try
             {
-                List<Notes> notesList = await _noteRepository.GetAllAsync();
+                List<Notes> notesList = await _noteRepository.GetAllAsync(pageSize:pageSize , pageNumber:pageNumber);
 
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.OK;

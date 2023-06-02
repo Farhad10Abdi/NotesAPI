@@ -30,11 +30,11 @@ namespace Notes_API.Controllers.v1
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetAllNoteBooks()
+        public async Task<ActionResult<APIResponse>> GetAllNoteBooks(int pageSize = 2, int pageNumber = 1)
         {
             try
             {
-                List<NoteBook> noteBooks = await _noteBookRepository.GetAllAsync();
+                List<NoteBook> noteBooks = await _noteBookRepository.GetAllAsync(pageSize: pageSize, pageNumber: pageNumber);
                 if (noteBooks.Count == 0)
                 {
                     _response.IsSuccess = false;
