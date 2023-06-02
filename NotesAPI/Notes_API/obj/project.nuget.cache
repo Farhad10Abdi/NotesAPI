@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "B2RSFNHbIyLUfz5XQOZuT42j6RtcGlKhSGeRabhclqvxiemKz9UQJ8zA4c9ZczFr0GhdKHtHAqqJ7+SZ88qGAw==",
+  "dgSpecHash": "ojibfLRevkXS2JiN8j/sh7wFg8r3QlYXZA18l4sg64it/vOxOV5suwQfMKnK3xtzNiejFwPnGui99PaGUz7pNQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\NotesAPI\\NotesAPI\\Notes_API\\Notes_API.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,8 @@
     "C:\\Users\\Lenovo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\8.0.0-preview.4.23260.4\\microsoft.aspnetcore.jsonpatch.8.0.0-preview.4.23260.4.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\7.0.5\\microsoft.aspnetcore.mvc.newtonsoftjson.7.0.5.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
+    "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning.apiexplorer\\5.1.0\\microsoft.aspnetcore.mvc.versioning.apiexplorer.5.1.0.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.3\\microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
