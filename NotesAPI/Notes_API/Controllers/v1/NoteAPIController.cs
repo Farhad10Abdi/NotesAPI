@@ -8,6 +8,7 @@ using Notes_API.Repository.IRepository;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Text.Json;
 
 namespace Notes_API.Controllers.v1
 {
@@ -37,6 +38,10 @@ namespace Notes_API.Controllers.v1
             {
                 List<Notes> notesList = await _noteRepository.GetAllAsync(pageSize:pageSize , pageNumber:pageNumber);
 
+
+                Pagination pagination = new() { pageNumber = pageNumber, pageSize = pageSize };
+
+                Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagination));
                 _response.IsSuccess = true;
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.result = _mapper.Map<List<NoteDTO>>(notesList);
