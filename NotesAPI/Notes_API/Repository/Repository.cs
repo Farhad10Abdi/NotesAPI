@@ -20,12 +20,16 @@ namespace Notes_API.Repository
             await SaveChangesAsync();
         }
 
-        public Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
+        public Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, int pageSize = 3, int pageNumber = 1)
         {
             IQueryable<T> query = set;
             if (filter != null)
             {
                 query = query.Where(filter);
+            }
+            if (pageSize > 0) 
+            {
+                query = query.Skip(pageSize * (pageNumber -1)).Take(pageSize);
             }
             return query.ToListAsync();
         }
