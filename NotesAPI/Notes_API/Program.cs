@@ -37,6 +37,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 builder.Services.AddScoped<INoteRepository,NoteRepository>();
 builder.Services.AddScoped<INoteBookRepository, NoteBookRepository>();
 
+builder.Services.AddResponseCaching();
+
 builder.Services.AddApiVersioning(options =>
 {
     options.AssumeDefaultVersionWhenUnspecified = true;
