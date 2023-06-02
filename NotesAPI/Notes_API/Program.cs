@@ -19,7 +19,13 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Note API",
+        Title = "Note API V1",
+        Description = "API to manage Notes"
+    });
+    options.SwaggerDoc("v2", new OpenApiInfo
+    {
+        Version = "v2",
+        Title = "Note API V2",
         Description = "API to manage Notes"
     });
 });
@@ -57,6 +63,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "NoteAPI_V1");
+        options.SwaggerEndpoint("/swagger/v2/swagger.json", "NoteAPI_V2");
     });
 }
 
