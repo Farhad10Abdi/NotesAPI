@@ -10,7 +10,7 @@ using System.Net;
 
 namespace Notes_API.Controllers
 {
-    [Route("api/NoteBookAPI")]
+    [Route("api/v{version:apiversion}/NoteBookAPI")]
     [ApiController]
     public class NoteBookAPIController : ControllerBase
     {

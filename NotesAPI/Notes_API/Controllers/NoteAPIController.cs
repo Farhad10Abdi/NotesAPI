@@ -11,7 +11,7 @@ using System.Net;
 
 namespace Notes_API.Controllers
 {
-    [Route("api/NoteAPI")]
+    [Route("api/v{version:apiversion}/NoteAPI")]
     [ApiController]
     public class NoteAPIController : ControllerBase
     {
