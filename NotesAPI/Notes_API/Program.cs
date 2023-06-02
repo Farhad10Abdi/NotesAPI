@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Notes_API;
 using Notes_API.Data;
+using Notes_API.Models;
 using Notes_API.Repository;
 using Notes_API.Repository.IRepository;
 using System.Threading.RateLimiting;
@@ -33,6 +35,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<INoteRepository,NoteRepository>();
 builder.Services.AddScoped<INoteBookRepository, NoteBookRepository>();
